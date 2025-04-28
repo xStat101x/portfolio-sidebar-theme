@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <base href="/">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="Description" content="Demonstration for portfolio-sidebar-theme">
+
+  <style>
+    :root, html, body {
+      margin: 0;
+      padding: 0;
+    }
+    li {
+      text-align: center;
+    }
+    p {
+      color: white;
+    }
+    h1 {
+      color: white;
+    }
+    
+    portfolio-sidebar {
+      position: absolute;
+      top: 0;
+      height: 100vh;
+      width: 20vw;
+      background-color: #2e4571;
+      display: block;
+    }
+  </style>
+</head>
+
+<script type="module" src="./portfolio-sidebar-theme.js"></script>
+<script type="module" src="./portfolio-sidebar.js"></script>
+<script type="module" src="./portfolio-page.js"></script>
+<script type="module" src="./portfolio-page-wrapper.js"></script>
+
+<body>
+  
+  <portfolio-sidebar-theme>
+    <portfolio-sidebar>
+    </portfolio-sidebar>
+  </portfolio-sidebar-theme>
+  
+
+
+</body>
+</html>
