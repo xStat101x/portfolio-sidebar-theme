@@ -12,7 +12,7 @@ import "./portfolio-page-wrapper.js";
  * @demo index.html
  * @element portfolio-sidebar
  */
-export class PortfolioSidebar extends DDDSuper(LitElement) {
+export class PortfolioSidebar extends DDDSuper(I18NMixin(LitElement)) {
 
   static get tag() {
     return "portfolio-sidebar";
@@ -20,14 +20,12 @@ export class PortfolioSidebar extends DDDSuper(LitElement) {
 
   constructor() {
     super();
-    this.pageLinkList = "";
   }
 
   // Lit reactive properties
   static get properties() {
     return {
       ...super.properties,
-      pageLinkList: { type: Array },
     };
   }
 
@@ -37,9 +35,9 @@ export class PortfolioSidebar extends DDDSuper(LitElement) {
     css`
       :host {
         display: block;
-        width: 20vw;
-        height: 100vh;
+        font-family: var(--ddd-font-navigation);
       }
+
       .wrapper
       {
         width: 300px;
@@ -55,6 +53,10 @@ export class PortfolioSidebar extends DDDSuper(LitElement) {
         display: flex;
         text-align: center;
         border-right: 10px solid white;
+      }
+
+      .links{
+        margin: auto;
       }
     `];
   }

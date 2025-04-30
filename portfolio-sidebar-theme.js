@@ -4,8 +4,6 @@
  */
 import { LitElement, html, css } from "lit";
 import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
-import { I18NMixin } from "@haxtheweb/i18n-manager/lib/I18NMixin.js";
-import "@haxtheweb/scroll-button/scroll-button.js"
 import "./portfolio-sidebar.js";
 
 /**
@@ -42,6 +40,7 @@ export class PortfolioSidebarTheme extends DDDSuper(LitElement) {
         background-color: var(--ddd-theme-accent);
         font-family: var(--ddd-font-navigation);
       }
+
       portfolio-sidebar {
         display: block;
         width: 310px;
@@ -52,7 +51,12 @@ export class PortfolioSidebarTheme extends DDDSuper(LitElement) {
         color: var(--portfolio-sidebar-color, white);
       }
       .wrapper {
-        margin-left: 310px;      }
+        margin-left: 310px;
+      }
+      a {
+        color: white;
+        font-size: var(--ddd-font-size-m);
+      }
     `];
   }
 
@@ -61,13 +65,32 @@ export class PortfolioSidebarTheme extends DDDSuper(LitElement) {
     return html`
     <portfolio-sidebar>
       <ul>
-        
+        ${this.pages.map((page, index) => html`<li><a href="#${page.number}" @click="${this.linkChange}" data-index="${index}">${page.title}</a></li>`)}
       </ul>
     </portfolio-sidebar>
-    <div class="wrapper">
+    <div class="wrapper" @page-added="${this.addPage}">
       <slot></slot>
     </div>`;
   }
+
+
+  linkChange(e) {
+    let number = parseInt(e.target.getAttribute('data-index'));
+    if (number >= 0) {
+      this.pages[number].element.scrollIntoView();
+    }
+  }
+
+  addPage(e) {
+    const element = e.detail.value
+    const page = {
+      number: element.pagenumber,
+      title: element.title,
+      element: element,
+    }
+    this.pages = [...this.pages, page];
+  }
+
 }
 
 globalThis.customElements.define(PortfolioSidebarTheme.tag, PortfolioSidebarTheme);
