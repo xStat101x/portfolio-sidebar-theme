@@ -57,6 +57,20 @@ export class PortfolioPage extends DDDSuper(LitElement) {
       <slot></slot>
     </div>`;
   }
+  firstUpdated(changedProperties) {
+    if (super.firstUpdated) {
+      super.firstUpdated(changedProperties);
+    }
+
+    console.log("Dispatching page-added event", this.title);
+    this.dispatchEvent(new CustomEvent('page-added', {
+      bubbles: true,
+      composed: true,
+      detail: {
+        value: this
+      }
+    }))
+  }
 }
 
 globalThis.customElements.define(PortfolioPage.tag, PortfolioPage);

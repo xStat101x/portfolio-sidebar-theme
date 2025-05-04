@@ -20,14 +20,14 @@ export class PortfolioSidebarTheme extends DDDSuper(LitElement) {
 
   constructor() {
     super();
-    this.page = [];
+    this.pages = [];
   }
 
   // Lit reactive properties
   static get properties() {
     return {
       ...super.properties,
-      page: { type: Array },
+      pages: { type: Array },
     };
   }
 
@@ -46,9 +46,8 @@ export class PortfolioSidebarTheme extends DDDSuper(LitElement) {
         width: 310px;
         position: fixed;
         top: 0;
-        bottom:0;
         left: 0;
-        color: var(--portfolio-sidebar-color, white);
+        color: white;
       }
       .wrapper {
         margin-left: 310px;
@@ -63,31 +62,48 @@ export class PortfolioSidebarTheme extends DDDSuper(LitElement) {
   // Lit render the HTML
   render() {
     return html`
-    <portfolio-sidebar>
-      <ul>
-        ${this.pages.map((page, index) => html`<li><a href="#${page.number}" @click="${this.linkChange}" data-index="${index}">${page.title}</a></li>`)}
-      </ul>
-    </portfolio-sidebar>
-    <div class="wrapper" @page-added="${this.addPage}">
-      <slot></slot>
-    </div>`;
+      <portfolio-sidebar>
+        <ul>
+          ${this.pages.map((page, index) => html`
+            <li>
+              <a href="#${page.number}" @click="${this.linkChange}" data-index="${index}">
+                ${page.title}
+              </a>
+            </li>`)}
+        </ul>
+      </portfolio-sidebar>
+      <div class="wrapper">
+        <slot></slot>
+      </div>`;
   }
 
+  /**
+   * AddPage Method wasn't being called for some reason so I asked co-piolot what was wrong
+   * It suggested I add this method and after verifying it was being called correctly via the console...
+   * I added the event listener to this method so it would call addPage.
+   * This took me 4 hours so I have no shame in asking co-pilot for help.
+   */
+  connectedCallback() {
+    super.connectedCallback();
+    this.addEventListener('page-added', this.addPage);
+  }
 
   linkChange(e) {
-    let number = parseInt(e.target.getAttribute('data-index'));
+    let number = parseInt(e.target.getAttribute('data-index'), 10);
     if (number >= 0) {
       this.pages[number].element.scrollIntoView();
     }
   }
 
   addPage(e) {
-    const element = e.detail.value
+    console.log('page-added event received:', e.detail.value);
+    const element = e.detail.value;
     const page = {
-      number: element.pagenumber,
+      number: element.order,
       title: element.title,
       element: element,
-    }
+    };
+    console.log('Adding page:', page);
     this.pages = [...this.pages, page];
   }
 
