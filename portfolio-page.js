@@ -4,7 +4,7 @@
  */
 import { LitElement, html, css } from "lit";
 import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
-
+import "./simple-cta-v2.js";
 
 /**
  * `portfolio-page`
@@ -43,11 +43,15 @@ export class PortfolioPage extends DDDSuper(LitElement) {
         height: 100vh;
         display: block;
         background-color: var(--ddd-theme-accent);
+        position: relative;
       }
       .h1 {
         color: white;
       }
-      
+      simple-cta-v2 {
+        position: absolute;
+        bottom: 0;
+        right: 20px;
     `];
   }
 
@@ -55,6 +59,7 @@ export class PortfolioPage extends DDDSuper(LitElement) {
   render() {
     return html`
     <h1>${this.title}</h1>
+    ${this.cta ? html`<simple-cta-v2 link="https://gopsusports.com/spirit/nittany-lion-mascot" img="https://gopsusports.com/_nuxt/logo-BDHEpLK6.svg"></simple-cta-v2>`: ''}
     <div class="wrapper">
       <slot></slot>
     </div>`;

@@ -21,6 +21,8 @@ export class SimpleCtaV2 extends DDDSuper(LitElement) {
   constructor() {
     super();
     this.title = "";
+    this.link = "";
+    this.img = "";
   }
 
   // Lit reactive properties
@@ -28,6 +30,8 @@ export class SimpleCtaV2 extends DDDSuper(LitElement) {
     return {
       ...super.properties,
       title: { type: String },
+      link: { type: String },
+      img: { type: String },
     };
   }
 
@@ -36,19 +40,23 @@ export class SimpleCtaV2 extends DDDSuper(LitElement) {
     return [super.styles,
     css`
       :host {
-        display: block;
-        color: var(--ddd-theme-primary);
-        background-color: var(--ddd-theme-accent);
-        font-family: var(--ddd-font-navigation);
+        display: absolute;
       }
       .wrapper {
-        width: 400px;
-        height: 200px;
+        width: 100px;
+        height: 100px;
         margin: var(--ddd-spacing-2);
         padding: var(--ddd-spacing-4);
       }
-      h3 span {
-        font-size: var(--portfolio-sidebar-theme-label-font-size, var(--ddd-font-size-s));
+      a {
+        display: inline-block;
+        text-decoration: none; /* Remove underline from the link */
+      }
+      img {
+        width: 100%;
+        height: auto;
+        border-radius: var(--ddd-border-radius-1);
+        box-shadow: var(--ddd-shadow-1);
       }
     `];
   }
@@ -56,13 +64,13 @@ export class SimpleCtaV2 extends DDDSuper(LitElement) {
   // Lit render the HTML
   render() {
     return html`
-    <div class=${this.title}>
-      <a href=${this.href}>
-        <img src=${this.img}></img>
+    <div class="wrapper">
+      <a href=${this.link}>
+        <img src=${this.img} alt="No Image" />
       </a>
       <slot></slot>
     </div>`;
   }
 }
 
-globalThis.customElements.define(PortfolioPageWrapper.tag, PortfolioPageWrapper);
+globalThis.customElements.define(SimpleCtaV2.tag, SimpleCtaV2);
