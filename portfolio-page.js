@@ -22,6 +22,7 @@ export class PortfolioPage extends DDDSuper(LitElement) {
     super();
     this.title = "";
     this.order = null;
+    this.cta = false;
   }
 
   // Lit reactive properties
@@ -30,6 +31,7 @@ export class PortfolioPage extends DDDSuper(LitElement) {
       ...super.properties,
       title: { type: String },
       order: { type: Number },
+      cta: { type: Boolean },
     };
   }
 
@@ -62,7 +64,7 @@ export class PortfolioPage extends DDDSuper(LitElement) {
       super.firstUpdated(changedProperties);
     }
 
-    console.log("Dispatching page-added event", this.title);
+    
     this.dispatchEvent(new CustomEvent('page-added', {
       bubbles: true,
       composed: true,

@@ -5,6 +5,7 @@
 import { LitElement, html, css } from "lit";
 import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
 import "./portfolio-sidebar.js";
+import '@haxtheweb/scroll-button/scroll-button.js';
 
 /**
  * `portfolio-sidebar-theme`
@@ -37,73 +38,111 @@ export class PortfolioSidebarTheme extends DDDSuper(LitElement) {
     css`
       :host {
         height: 100vh;
-        background-color: var(--ddd-theme-accent);
-        font-family: var(--ddd-font-navigation);
+        background-color: var(--ddd-theme-default-white);
+        font-family: var(--ddd-font-primary);
       }
-
+      
       portfolio-sidebar {
         display: block;
         width: 310px;
         position: fixed;
         top: 0;
         left: 0;
-        color: white;
+      }
+      scroll-button {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1000;
+      }
+      .header {
+        position: block;
+        margin-left: 300px;
+        height: 40vh;
+        display: flex;
+        flex-direction: column; /* Stack elements vertically */
+        align-items: center; /* Center elements horizontally */
+        justify-content: center; /* Center elements vertically */
+      }
+      .spacer {
+        height: 10vh;
+        width: 100%;
+        background-color: var(--ddd-theme-default-nittanyNavy);
+        
       }
       .wrapper {
         margin-left: 310px;
       }
       a {
-        color: white;
-        font-size: var(--ddd-font-size-m);
+        color: var(--ddd-theme-default-white);
+        text-decoration: none;
+        font-size: var(--ddd-font-size-l);
       }
+      ul {
+        list-style: none;
+      }
+      h1 {
+        letter-spacing: var(--ddd-ls-72-lg);
+        font-weight: bold; 
+        font-size: var(--ddd-font-size-xxl); 
+        color: var(--ddd-theme-default-beaverBlue);
+        text-transform: uppercase; 
+        margin: 0;
+      }
+      h2 {
+        color: var(--ddd-theme-default-beaverBlue);
+      }
+      simple-cta::part(icon) {
+        width: 50px;
+        height: 50px;
+      }
+      
     `];
   }
 
   // Lit render the HTML
   render() {
     return html`
+      <scroll-button></scroll-button>
+
+      <div class="header">
+        <img src="https://brand.psu.edu/images/backgrounds/penn-state-shield.jpg" width="100" height="100">
+        <h2>Profesional</h2>
+        <h1>Portfolio</h1>
+      </div>
+
+      <div class="spacer"></div>
+
       <portfolio-sidebar>
         <ul>
           ${this.pages.map((page, index) => html`
             <li>
-              <a href="#${page.number}" @click="${this.linkChange}" data-index="${index}">
+              <a href="#screen-${page.number}" @click="${this.linkChange}" data-index="${index}">
                 ${page.title}
               </a>
             </li>`)}
         </ul>
       </portfolio-sidebar>
-      <div class="wrapper">
+
+      <div class="wrapper" @page-added="${this.addPage}">
         <slot></slot>
       </div>`;
   }
 
-  /**
-   * AddPage Method wasn't being called for some reason so I asked co-piolot what was wrong
-   * It suggested I add this method and after verifying it was being called correctly via the console...
-   * I added the event listener to this method so it would call addPage.
-   * This took me 4 hours so I have no shame in asking co-pilot for help.
-   */
-  connectedCallback() {
-    super.connectedCallback();
-    this.addEventListener('page-added', this.addPage);
-  }
-
   linkChange(e) {
-    let number = parseInt(e.target.getAttribute('data-index'), 10);
+    let number = parseInt(e.target.getAttribute('data-index'));
     if (number >= 0) {
       this.pages[number].element.scrollIntoView();
     }
   }
 
   addPage(e) {
-    console.log('page-added event received:', e.detail.value);
     const element = e.detail.value;
     const page = {
       number: element.order,
       title: element.title,
       element: element,
     };
-    console.log('Adding page:', page);
     this.pages = [...this.pages, page];
   }
 

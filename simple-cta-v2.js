@@ -4,19 +4,18 @@
  */
 import { LitElement, html, css } from "lit";
 import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
-import { I18NMixin } from "@haxtheweb/i18n-manager/lib/I18NMixin.js";
-import "@haxtheweb/scroll-button/scroll-button.js"
 import "./portfolio-page.js";
 /**
- * `portfolio-sidebar-theme`
+ * `simple-cta-v2`
  * 
  * @demo index.html
- * @element portfolio-page-wrapper
+ * @element simple-cta-v2
+ * @description A better version of simple-cta that allows me to change the icon because I couldn't figure it out
  */
-export class PortfolioPageWrapper extends DDDSuper(LitElement) {
+export class SimpleCtaV2 extends DDDSuper(LitElement) {
 
   static get tag() {
-    return "portfolio-page-wrapper";
+    return "simple-cta-v2";
   }
 
   constructor() {
@@ -57,8 +56,10 @@ export class PortfolioPageWrapper extends DDDSuper(LitElement) {
   // Lit render the HTML
   render() {
     return html`
-    <div class="wrapper">
-      <h1>${this.title}</h1>
+    <div class=${this.title}>
+      <a href=${this.href}>
+        <img src=${this.img}></img>
+      </a>
       <slot></slot>
     </div>`;
   }

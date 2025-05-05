@@ -4,7 +4,6 @@
  */
 import { LitElement, html, css } from "lit";
 import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
-import "./portfolio-page-wrapper.js";
 
 /**
  * `portfolio-sidebar-theme`
@@ -36,6 +35,7 @@ export class PortfolioSidebar extends DDDSuper(LitElement) {
       :host {
         display: block;
         font-family: var(--ddd-font-navigation);
+        --ddd-theme-default-link: white; // Links in chrome were blue by default and white in firefox !important didn't work so I did this
       }
 
       .wrapper
@@ -43,23 +43,23 @@ export class PortfolioSidebar extends DDDSuper(LitElement) {
         width: 300px;
         height: 100vh;
         overflow-x: hidden;
-        background:  linear-gradient(
-          rgba(0, 0, 0, 0.7), 
-          rgba(0, 0, 0, 0.7)
-        ),
-        url(https://i.pinimg.com/736x/be/67/57/be6757d2610cc12e64ce497c43734aac.jpg);
-        background-color: black;
+        background-color: var(--ddd-theme-default-nittanyNavy);
         display: flex;
         text-align: center;
-        border-right: 10px solid white;
       }
 
       .links{
         margin: auto;
-        padding: 10px;
+        padding: var(--ddd-theme-default-padding);
         text-align: left;
-        color: white;
       }
+      .links a {
+        text-decoration: none;
+      }
+      .links a:hover {
+        text-decoration: underline;
+      }
+
     `];
   }
 
