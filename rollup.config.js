@@ -21,6 +21,22 @@ export default {
     html({
       minify: true,
     }),
+    copy({
+      targets: [
+        {
+          src: 'node_modules/@haxtheweb/simple-icon/lib/svgs',
+          dest: 'public',
+        },
+        {
+          src: 'node_modules/@haxtheweb/hax-iconset/lib/svgs',
+          dest: 'public',
+        },
+        {
+          src: 'other/folder/name/with/pictures',
+          dest: 'public',
+        },
+      ],
+    }),
     /** Resolve bare module imports */
     nodeResolve(),
     /** Minify JS, compile JS to a lower language target */
