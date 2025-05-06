@@ -37,17 +37,16 @@ export class PortfolioSidebarTheme extends DDDSuper(LitElement) {
     return [super.styles,
     css`
       :host {
-        height: 100vh;
         background-color: var(--ddd-theme-default-white);
         font-family: var(--ddd-font-primary);
       }
-      
       portfolio-sidebar {
         display: block;
         width: 310px;
         position: fixed;
         top: 0;
         left: 0;
+        z-index: 1000;
       }
       scroll-button {
         position: fixed;
@@ -60,18 +59,17 @@ export class PortfolioSidebarTheme extends DDDSuper(LitElement) {
         margin-left: 300px;
         height: 40vh;
         display: flex;
-        flex-direction: column; /* Stack elements vertically */
-        align-items: center; /* Center elements horizontally */
-        justify-content: center; /* Center elements vertically */
+        flex-direction: column; 
+        align-items: center; 
+        justify-content: center; 
       }
       .spacer {
         height: 10vh;
         width: 100%;
         background-color: var(--ddd-theme-default-nittanyNavy);
-        
       }
       .wrapper {
-        margin-left: 310px;
+        margin-left: 300px;
       }
       a {
         color: var(--ddd-theme-default-white);
@@ -92,17 +90,32 @@ export class PortfolioSidebarTheme extends DDDSuper(LitElement) {
       h2 {
         color: var(--ddd-theme-default-beaverBlue);
       }
-      simple-cta::part(icon) {
-        width: 50px;
-        height: 50px;
+      @media (max-width: 768px) {
+        :host {
+          flex-direction: column;
+        }
+        .wrapper {
+          margin-left: 0;
+        }
+        .header {
+          margin-left: 0;
+        }
+        portfolio-sidebar {
+          position: fixed;
+          display: block;
+          width: 100vw;
+          height: 100vh;
+          z-index: 1000;
+        }
       }
-      
     `];
   }
 
   // Lit render the HTML
   render() {
     return html`
+
+
       <scroll-button></scroll-button>
 
       <div class="header">
@@ -123,7 +136,7 @@ export class PortfolioSidebarTheme extends DDDSuper(LitElement) {
             </li>`)}
         </ul>
       </portfolio-sidebar>
-
+    
       <div class="wrapper" @page-added="${this.addPage}">
         <slot></slot>
       </div>`;

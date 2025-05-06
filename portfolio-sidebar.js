@@ -4,6 +4,7 @@
  */
 import { LitElement, html, css } from "lit";
 import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
+import "@haxtheweb/simple-icon/simple-icon.js";
 
 /**
  * `portfolio-sidebar-theme`
@@ -19,12 +20,14 @@ export class PortfolioSidebar extends DDDSuper(LitElement) {
 
   constructor() {
     super();
+    this.collapsed = false;
   }
 
   // Lit reactive properties
   static get properties() {
     return {
       ...super.properties,
+      collapsed: { type: Boolean },
     };
   }
 
@@ -34,23 +37,23 @@ export class PortfolioSidebar extends DDDSuper(LitElement) {
     css`
       :host {
         display: block;
+        position: relative;
         font-family: var(--ddd-font-navigation);
         --ddd-theme-default-link: white; // Links in chrome were blue by default and white in firefox !important didn't work so I did this
       }
-
       .wrapper
       {
         width: 300px;
         height: 100vh;
-        overflow-x: hidden;
         background-color: var(--ddd-theme-default-nittanyNavy);
         display: flex;
         text-align: center;
       }
-
+      .wrapper.collapsed {
+        width: 60px; 
+      }
       .links{
         margin: auto;
-        padding: var(--ddd-theme-default-padding);
         text-align: left;
       }
       .links a {
@@ -59,15 +62,40 @@ export class PortfolioSidebar extends DDDSuper(LitElement) {
       .links a:hover {
         text-decoration: underline;
       }
-
+      .links.collapsed {
+        display: none; /* Hide the links when collapsed */
+      }
+      .sidebar-menu {
+        position: relative;
+        top: 10px;
+        left: 10px;
+        cursor: pointer;
+      }
+      @media (max-width: 768px) {
+        .wrapper.collapsed {
+          width: 0;
+        }
+        .sidebar-menu {
+          position: absolute
+        }
+        .wrapper {
+          width: 100vw;
+          height: 100vh;
+        }
+      }
     `];
   }
 
   // Lit render the HTML
   render() {
     return html`
-    <div class="wrapper">
-      <div class="links">
+    <div class="wrapper ${this.collapsed ? 'collapsed' : ''}">
+    
+      <simple-icon-lite class="sidebar-menu" part="icon" icon="icons:menu" dir="ltr" @click="${this.toggleSidebar}">
+
+      </simple-icon-lite>
+
+      <div class="links ${this.collapsed ? 'collapsed' : ''}">
         <slot></slot> 
       </div>
     </div>`;
@@ -76,6 +104,9 @@ export class PortfolioSidebar extends DDDSuper(LitElement) {
   firstUpdated() {
     const slot = this.shadowRoot.querySelector('slot');
     console.log('Slot content:', slot.assignedNodes());
+  }
+  toggleSidebar() {
+    this.collapsed = !this.collapsed;
   }
 }
 

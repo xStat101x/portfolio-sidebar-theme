@@ -4,7 +4,7 @@
 <head>
   <base href="./">
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" viewport-fit="cover" />
   <meta name="Description" content="Demonstration for portfolio-sidebar-theme">
 
 
@@ -23,9 +23,31 @@
     }
     .content {
       display: flex;
-      ;
+      flex-direction: column;
     }
-   
+    iframe {
+      width: 50%;
+      height: 650px;
+      border: none;
+      margin: 0;
+      padding: var(--ddd-spacing-2)
+    }
+    #projects, #fun-facts, #about, #contact {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    @media (max-width: 768px) {
+      .content {
+        gap: 5px; 
+        flex-direction: column;
+        align-items: center;
+      }
+      iframe {
+        width: 100%;
+        height: 500px;
+      }
+    }
   </style>
   
 </head>
@@ -34,22 +56,54 @@
 <body>
   <portfolio-sidebar-theme>
     <portfolio-page title="About me" order="1">
-      <div class="content">
+      <div class="content" id="about">
         <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fnittanylionswire.usatoday.com%2Fwp-content%2Fuploads%2Fsites%2F100%2F2023%2F08%2FUSATSI_4925234.jpg%3Fw%3D721&f=1&nofb=1&ipt=d5bbe99c4b43902a597cc519ad4438fbd49de8c9139f9ec43d8300525645882f"></img>
         <p>Hey everyone! I am the Nittany Lion the mascot of the Penn State football team. I can do backflips, one arm pushups, and can even dance.</p>
       </div>  
     </portfolio-page>
     <portfolio-page title="Resume" order="2">
-      <p>My name is Alyssa and I'm a Human Centered Design and Development major. I will backflip off your windshield.</p>
+      <div class="content" id="resume">
+        <h2>Experience</h2>
+        <ul>
+          <li>2023 - Present: Penn State Nittany Lion</li>
+          <li>2022 - 2023: Penn State Cheerleader</li>
+          <li>2021 - 2022: Penn State Dance Team</li>
+        </ul>
+        <h2>Education</h2>
+        <ul>
+          <li>2021 - Present: Penn State University, Human Centered Design and Development</li>
+          <li>2019 - 2021: Penn State University, General Studies</li>
+        </ul>
+        <h2>Skills</h2>
+        <ul>
+          <li>Backflips</li>
+          <li>One arm pushups</li>
+        </ul>
+      </div>
     </portfolio-page>
     <portfolio-page title="Fun Facts" order="3">
-      <p>My name is Alyssa and I'm a Human Centered Design and Development major. I will backflip off your windshield.</p>
+      <div class="content" id="fun-facts">
+        <h2>Fun Facts</h2>
+        <ul>
+          <li>I am 6 feet 2 inches</li>
+          <li>I am the mascot for the Penn State football team.</li>
+          <li>I can do one arm pushups.</li>
+          <li>I can dance.</li>
+        </ul>
+      </div>
     </portfolio-page>
     <portfolio-page title="Projects" order="4">
-      <p>My name is Alyssa and I'm a Human Centered Design and Development major. I will backflip off your windshield.</p>
+      <div class="content" id="projects">
+        <h2>Projects</h2>
+        <ul>
+          <li><a href="https://portfolio-sidebar-theme-ochre.vercel.app/">Project 1</a></li>
+        </ul>
+      </div>
     </portfolio-page>
     <portfolio-page title="Contact" order="5" cta>
-      <p>My name is Alyssa and I'm a Human Centered Design and Development major. I will backflip off your windshield.</p>
+      <div class="content" id="contact">
+        <iframe src="https://forms.gle/tvA3Wjwg5C294fUT7">Loading…</iframe>
+      </div>
     </portfolio-page>
     
       

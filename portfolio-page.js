@@ -42,23 +42,53 @@ export class PortfolioPage extends DDDSuper(LitElement) {
       :host {
         height: 100vh;
         display: block;
-        background-color: var(--ddd-theme-accent);
         position: relative;
       }
       .h1 {
-        color: white;
+        color: var(--ddd-theme-default-white);
+        
+      }
+      .header {
+        background-color: var(--ddd-theme-default-nittanyNavy);
+        text-align: right;
+        padding: var(--ddd-spacing-1);
+        width: 100vw;
+        left: -330px;
+        position: relative;
       }
       simple-cta-v2 {
         position: absolute;
         bottom: 0;
-        right: 20px;
+        right: 0;
+      }
+      @media (max-width: 768px) {
+        :host {
+          padding: px;
+        }
+        .h1 {
+          width: 100vw;
+          font-size: var(--ddd-font-size-2); 
+        }
+        .header {
+          right: 0;
+          left: -10px;
+        }
+        .wrapper {
+          display: block;
+          position: relative;
+          flex-direction: column;
+          width: 100%;
+        }
+      }
     `];
   }
 
   // Lit render the HTML
   render() {
     return html`
-    <h1>${this.title}</h1>
+    <div class="header">
+      <h1>${this.title}</h1>
+    </div>
     ${this.cta ? html`<simple-cta-v2 link="https://gopsusports.com/spirit/nittany-lion-mascot" img="https://gopsusports.com/_nuxt/logo-BDHEpLK6.svg"></simple-cta-v2>`: ''}
     <div class="wrapper">
       <slot></slot>
